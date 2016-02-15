@@ -3,7 +3,6 @@ import os
 import sys
 
 root = os.path.dirname(__file__)
-sae.add_vendor_dir('vender')
 
 from sound import wsgi
 
