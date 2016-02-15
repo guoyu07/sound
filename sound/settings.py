@@ -25,7 +25,11 @@ SECRET_KEY = '$j3ir7tv18w7mdka)$z22jw82non8kw7sjk23*#p$e)obf9com'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    '.applinzi.com',
+    '.audioexpress.applinzi.com'
+]
 
 
 # Application definition
