@@ -1,3 +1,4 @@
+# -*-coding:utf-8-*-
 """
 Django settings for sound project.
 
@@ -79,10 +80,27 @@ WSGI_APPLICATION = 'sound.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+if 'SERVER_SOFTWARE' in os.environ:
+    import sae.const
+    from sae.const import MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASS, MYSQL_DB
+    DEBUG = True
+else:
+    MYSQL_HOST = 'localhost'
+    MYSQL_PORT = '3306'
+    MYSQL_USER = 'root'
+    MYSQL_PASS = '185313'  # 本地环境下配置数据库账号密码
+    MYSQL_DB = 'app_sound'
+    DEBUG = True
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': MYSQL_DB,
+        'USER': MYSQL_USER,
+        'PASSWORD': MYSQL_PASS,
+        'HOST': MYSQL_HOST,
+        'PORT': MYSQL_PORT
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
