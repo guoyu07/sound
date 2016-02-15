@@ -39,7 +39,7 @@ def register(request):
                 user.save()
                 result = '0'
         else:
-            result = '3' + request.POST
+            result = '2'
     else:
         result = '2'
 
