@@ -29,6 +29,8 @@ def register(request):
         nickname = request.POST.get('nickname', '')
         mail = request.POST.get('mail', '')
         password = request.POST.get('password', '')
+        userName = request.POST.get('userName', '')
+        userCode = request.POST.get('userCode', '')
         if nickname and mail and password:
             try:
                 user = User.objects.get(nickname=nickname)
@@ -38,6 +40,8 @@ def register(request):
                             action_time=time.time())
                 user.save()
                 result = '0'
+        elif userCode and userName:
+            result = '3'
         else:
             result = '2'
     else:
