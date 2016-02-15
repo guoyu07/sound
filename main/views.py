@@ -41,7 +41,14 @@ def register(request):
                 user.save()
                 result = '0'
         elif userCode and userName:
-            result = '3'
+            try:
+                user = User.objects.get(nickname=nickname)
+                result = '1'
+            except ObjectDoesNotExist:
+                user = User(nickname=userName, mail=userCode, password='salt', create_time=time.time(),
+                            action_time=time.time())
+                user.save()
+                result = '0'
         else:
             result = '2'
     else:
