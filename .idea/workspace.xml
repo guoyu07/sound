@@ -72,10 +72,10 @@
         <entry file="file://$PROJECT_DIR$/main/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.8252427" vertical-offset="398" max-vertical-offset="1746">
-              <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
+              <caret line="41" column="41" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="41" />
               <folding>
                 <element signature="e#21#90#0" expanded="true" />
-                <element signature="e#2497#2572#0" expanded="false" />
+                <element signature="e#2492#2567#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -556,10 +556,10 @@
     <entry file="file://$PROJECT_DIR$/main/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8252427" vertical-offset="398" max-vertical-offset="1746">
-          <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
+          <caret line="41" column="41" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="41" />
           <folding>
             <element signature="e#21#90#0" expanded="true" />
-            <element signature="e#2497#2572#0" expanded="false" />
+            <element signature="e#2492#2567#0" expanded="false" />
           </folding>
         </state>
       </provider>
