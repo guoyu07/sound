@@ -41,7 +41,7 @@ def register(request):
         else:
             result = '2'
     else:
-        result = '2'
+        result = '3'
 
     response.write(result)
     return response
