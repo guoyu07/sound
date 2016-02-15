@@ -26,26 +26,15 @@ def register(request):
 
     if request.method == 'POST':
         # 获取客户端信息
-        nickname = request.POST.get('nickname', '')
+        nickname = request.POST.get('userName', '')
         mail = request.POST.get('mail', '')
-        password = request.POST.get('password', '')
-        userName = request.POST.get('userName', '')
-        userCode = request.POST.get('userCode', '')
-        if nickname and mail and password:
+        password = request.POST.get('userCode', '')
+        if nickname and password:
             try:
                 user = User.objects.get(nickname=nickname)
                 result = '1'
             except ObjectDoesNotExist:
-                user = User(nickname=nickname, mail=mail, password=password+'salt', create_time=time.time(),
-                            action_time=time.time())
-                user.save()
-                result = '0'
-        elif userCode and userName:
-            try:
-                user = User.objects.get(nickname=nickname)
-                result = '1'
-            except ObjectDoesNotExist:
-                user = User(nickname=userName, mail=userCode, password='salt', create_time=time.time(),
+                user = User(nickname=nickname, mail='nomail', password=password, create_time=time.time(),
                             action_time=time.time())
                 user.save()
                 result = '0'
