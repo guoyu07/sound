@@ -39,9 +39,9 @@ def register(request):
                 user.save()
                 result = '0'
         else:
-            result = '2'
+            result = '3'
     else:
-        result = '3'
+        result = '2'
 
     response.write(result)
     return response
