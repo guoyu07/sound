@@ -4,10 +4,14 @@ from django.core.exceptions import ObjectDoesNotExist
 from main.models import User, Info
 import time
 import json
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 # Create your views here.
 token = 'salt'
 
 
+@csrf_exempt
 def register(request):
     """
     注册处理事件
@@ -43,6 +47,7 @@ def register(request):
     return response
 
 
+@csrf_exempt
 def login(request):
     """
     用户登陆事件
@@ -79,6 +84,7 @@ def login(request):
     return response
 
 
+@csrf_exempt
 def cg_password(requset):
     """
     修改密码
