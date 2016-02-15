@@ -26,9 +26,9 @@ def register(request):
 
     if request.method == 'POST':
         # 获取客户端信息
-        nickname = request.POST.get('nickname', '')
-        mail = request.POST.get('mail', '')
-        password = request.POST.get('password', '')
+        nickname = request.body.get('nickname', '')
+        mail = request.body.get('mail', '')
+        password = request.body.get('password', '')
         if nickname and mail and password:
             try:
                 user = User.objects.get(nickname=nickname)
