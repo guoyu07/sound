@@ -94,4 +94,21 @@ def cg_password(requset):
     # 需要配置邮件服务器，这个先不做
 
 
+@csrf_exempt
+def test(request):
+    """
+    测试api
+    :param request:
+    :return:
+    """
+    response = HttpResponse()
+    if request.method == 'POST':
+        if "success" in request.POST:
+            response.write('success in POST')
+        else:
+            response.write(str(request)+'fail')
+    return response
+
+
+
 

@@ -7,3 +7,4 @@ root = os.path.dirname(__file__)
 from sound import wsgi
 
 application = sae.create_wsgi_app(wsgi.application)
+sae.add_vendor_dir('vender')
