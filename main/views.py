@@ -103,10 +103,10 @@ def test(request):
     """
     response = HttpResponse()
     if request.method == 'POST':
-        if "success" in request.POST:
+        if request.POST.get("success", ""):
             response.write('success in POST')
         else:
-            response.write(str(request)+'fail')
+            response.write(str(request.POST.get("success", ""))+'fail')
     return response
 
 
