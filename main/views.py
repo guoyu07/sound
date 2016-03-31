@@ -1,7 +1,7 @@
 # -*-coding:utf-8-*-
 from django.shortcuts import render, render_to_response, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from main.models import User, Info
+from main.models import User, Express, Comments, Timeline
 import time
 import json
 from django.views.decorators.csrf import csrf_exempt
@@ -27,8 +27,9 @@ def register(request):
     if request.method == 'POST':
         # 获取客户端信息
         nickname = request.POST.get('userName', '')
-        mail = request.POST.get('mail', '')
         password = request.POST.get('userCode', '')
+        avatar = request.POST.get('avatar', '')
+
         if nickname and password:
             try:
                 user = User.objects.get(nickname=nickname)
@@ -41,9 +42,10 @@ def register(request):
         else:
             result = '2'
     else:
-        result = '2'
+        result = '-1'
 
     response.write(result)
+    response.write(fetch_recommend())  # 返回首页信息
     return response
 
 
@@ -58,29 +60,25 @@ def login(request):
     """
     response = HttpResponse()
     response['Content-Type'] = 'application/json'
-    info_data = {}
     result = '3'
 
     if request.method == 'POST':
         # 获取客户端信息
-        mail = request.POST.get('mail', '')
+        nickname = request.POST.get('userName', '')
         password = request.POST.get('password', '')
-        if mail and password:
+        if nickname and password:
             try:
                 # 用户存在
-                user = User.objects.get(mail=mail)
+                user = User.objects.get(nickname=nickname)
                 if user.password == password:
                     # 用户密码正确
-                    info_data['base_info'] = {'name': user.nickname,
-                                              'action_time': user.action_time}
                     result = '0'
                 else:
-                    result = '2'
+                    result = '-1'
             except ObjectDoesNotExist:
-                result = '1'
-    info = json.dumps(info_data)
-    response.write(info)
+                result = '-1'
     response.write(result)
+    response.write(fetch_recommend())
     return response
 
 
@@ -102,12 +100,73 @@ def test(request):
     :return:
     """
     response = HttpResponse()
+
+    response['Content-Type'] = 'text/javascript'
     if request.method == 'POST':
-        if request.POST.get("success", ""):
-            response.write('success in POST')
+        req = json.loads(request.body)
+        if req.get("success", ""):
+            response.write('success in POST:'+req.get("success"))
         else:
-            response.write(str(request.POST.get("success", ""))+'fail')
+            response.write(str(request.body)+'fetch')
     return response
+
+
+@csrf_exempt
+def depatch(request):
+    """
+    路由分发函数
+    :param request:json数据中含有操作类型
+    :return:
+    """
+
+    if request.method == 'GET':
+        type = request.GET.get('type', '')
+    else:
+        type = request.POST.get('type', '')
+
+    if type == 'register':
+        return register(request)
+    elif type == 'login':
+        return login(request)
+    else:
+        response = HttpResponse()
+        response['Content-Type'] = 'application/json'
+        response.write('-1')
+        return response
+
+
+def fetch_recommend():
+    """
+
+    :return:返回首页显示的json数据
+    """
+    # 构造成json数据
+    show_list = []
+    try:
+        show = Express.objects.all()[0: 10]  # 默认按照点赞人数排行
+        for show_item in show:
+            show_list.append({
+                "nickname": show_item.user.nickname,  # 名字
+                "avatar": show_item.user.avatar,  # 头像
+                "text": show_item.contain_text,  # 发表的文字内容
+                "picture": show_item.contain_pic,  # 发表的图片信息，暂时只能一张图片
+                "voice": show_item.contain_voice,  # 发表的语音
+                "like": show_item.like,  # 点赞人数
+                "collection": show_item.collection,
+                "share": show_item.share,
+                "create_time": show_item.create_time
+                # TODO:评论内容点进去再加载
+            })
+    except ObjectDoesNotExist:
+        pass
+
+    json_dict = json.dumps(show_list)
+    return json_dict
+
+
+
+
+
 
 
 
